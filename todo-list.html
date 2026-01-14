@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Pure CSS To-Do List</title>
+  <link rel="stylesheet" href="todo-list.css" />
+</head>
+<body>
+  <div class="todo-container">
+    <h1 class="title">My To-Do List</h1>
+    
+    
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <span class="counter">0 / 8</span>
+    </div>
+
+    
+    <div class="add-task">
+      <input type="text" placeholder="Enter new task..." class="task-input" />
+      <label class="add-btn">
+        <input type="radio" name="add-task" id="add1" checked />
+        <span>+ Add</span>
+      </label>
+    </div>
+
+    
+    <ul class="todo-list">
+      
+      <li data-task="1">
+        <label>
+          <input type="checkbox" id="task1" />
+          <span>Learn HTML basics</span>
+        </label>
+      </li>
+      <li data-task="2" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task2" />
+          <span>Practice CSS styling</span>
+        </label>
+      </li>
+      <li data-task="3" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task3" />
+          <span>Build animated to-do list</span>
+        </label>
+      </li>
+      
+      <li data-task="4" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task4" />
+          <span>Upload to GitHub</span>
+        </label>
+      </li>
+      <li data-task="5" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task5" />
+          <span>Learn pure CSS tricks</span>
+        </label>
+      </li>
+      <li data-task="6" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task6" />
+          <span>Add progress counter</span>
+        </label>
+      </li>
+      <li data-task="7" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task7" />
+          <span>Make it responsive</span>
+        </label>
+      </li>
+      <li data-task="8" class="hidden-task">
+        <label>
+          <input type="checkbox" id="task8" />
+          <span>Share with friends</span>
+        </label>
+      </li>
+    </ul>
+
+    <!-- Clear Button -->
+    <button class="clear-btn">Clear Completed</button>
+  </div>
+</body>
+</html>
