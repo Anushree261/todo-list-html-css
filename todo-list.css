@@ -1,0 +1,212 @@
+/* Previous styles + new features */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.todo-container {
+  background: rgba(255, 255, 255, 0.95);
+  width: 90%;
+  max-width: 480px;
+  padding: 32px 28px 24px;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: floatIn 1s ease-out;
+}
+
+@keyframes floatIn {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 10px #4ecdc4; }
+  to { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 20px #ff6b6b; }
+}
+
+/* NEW: Progress Bar */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 12px;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 12px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+  width: 0%; /* Updates via CSS counters */
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+.counter {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  min-width: 50px;
+}
+
+/* NEW: Add Task Section */
+.add-task {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.task-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.task-input:focus {
+  outline: none;
+  border-color: #4ecdc4;
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+  transform: scale(1.02);
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4);
+}
+
+.add-btn input[type="radio"] {
+  display: none;
+}
+
+/* Reveal next task when "Add" clicked */
+.hidden-task:not([data-task="1"]):target,
+.hidden-task:has(+ input[name="add-task"]:checked) { display: none !important; }
+#add1:checked ~ .todo-list [data-task="2"],
+#add2:checked ~ .todo-list [data-task="3"] { display: flex !important; }
+/* Extend pattern for more tasks */
+
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 200px;
+}
+
+.todo-list li {
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-left: 4px solid #4ecdc4;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  order: 0; /* For auto-sort */
+}
+
+.todo-list li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transition: left 0.5s;
+}
+
+.todo-list li:hover::before {
+  left: 100%;
+}
+
+.todo-list li:hover {
+  transform: translateX(8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4);
+  border-left-color: #ff6b6b;
+}
+
+/* Auto-sort: checked go to bottom */
+.todo-list input[type="checkbox"]:checked + span ~ li { order: 1; }
+
+.todo-list label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.todo-list input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin-right: 14px;
+  accent-color: #4ecdc4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.todo-list input[type="checkbox"]:hover {
+  filter: hue-rotate(30deg) brightness(1.2);
+  transform: scale(1.1);
+}
+
+.todo-list input[type="checkbox"]:checked {
+  animation: checkBounce 0.4s ease;
+}
